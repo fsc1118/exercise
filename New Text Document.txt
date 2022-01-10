@@ -1,0 +1,38 @@
+class Solution {
+    public boolean isAdditiveNumber(String num) {
+        return isAdditiveNumber(num, 0);
+    }
+    private boolean isAdditiveNumber(String num, int start) {
+        if (start >= num.length()) {
+            return true;
+        }
+        if (num.charAt(start) == '0') {
+            return false;
+        }
+        for (int i = start + 1; i < num.length(); i++) {
+            String num1 = num.substring(start, i);
+            System.out.println(num1);
+            int num2Start = i;
+            for (int j = num2Start + 1; j < num.length(); j++) {
+                String num2 = num.substring(num2Start, j);
+                if (num2.charAt(0) == '0') {
+                    break;
+                }
+                String num3Expect = String.valueOf(Integer.parseInt(num1) + Integer.parseInt(num2));
+                int num3Start = j;
+                for (int k = num3Start + 1; k < num.length(); k++) {
+                    String actualNum3 = num.substring(num3Start, k);
+                    if (actualNum3.charAt(0) == '0') {
+                        break;
+                    }
+                    if (actualNum3.equals(num3Expect)) {
+                        if (isAdditiveNumber(num, k)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
